@@ -1,0 +1,23 @@
+name: CI - productcatalogservice
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/productcatalogservice/**'
+      - '.github/workflows/ci-productcatalogservice.yaml'
+      - '.github/workflows/build-push-update.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ci-productcatalogservice-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-push-update:
+    uses: ./.github/workflows/build-push-update.yml
+    with:
+      service: productcatalogservice
+      context: src/productcatalogservice
+    secrets: inherit

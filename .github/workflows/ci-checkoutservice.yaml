@@ -1,0 +1,23 @@
+name: CI - checkoutservice
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/checkoutservice/**'
+      - '.github/workflows/ci-checkoutservice.yaml'
+      - '.github/workflows/build-push-update.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ci-checkoutservice-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-push-update:
+    uses: ./.github/workflows/build-push-update.yml
+    with:
+      service: checkoutservice
+      context: src/checkoutservice
+    secrets: inherit

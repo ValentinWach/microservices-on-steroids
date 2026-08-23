@@ -1,0 +1,23 @@
+name: CI - recommendationservice
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/recommendationservice/**'
+      - '.github/workflows/ci-recommendationservice.yaml'
+      - '.github/workflows/build-push-update.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ci-recommendationservice-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-push-update:
+    uses: ./.github/workflows/build-push-update.yml
+    with:
+      service: recommendationservice
+      context: src/recommendationservice
+    secrets: inherit

@@ -1,0 +1,23 @@
+name: CI - frontend
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/frontend/**'
+      - '.github/workflows/ci-frontend.yaml'
+      - '.github/workflows/build-push-update.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ci-frontend-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-push-update:
+    uses: ./.github/workflows/build-push-update.yml
+    with:
+      service: frontend
+      context: src/frontend
+    secrets: inherit

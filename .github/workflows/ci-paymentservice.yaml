@@ -1,0 +1,23 @@
+name: CI - paymentservice
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/paymentservice/**'
+      - '.github/workflows/ci-paymentservice.yaml'
+      - '.github/workflows/build-push-update.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ci-paymentservice-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-push-update:
+    uses: ./.github/workflows/build-push-update.yml
+    with:
+      service: paymentservice
+      context: src/paymentservice
+    secrets: inherit

@@ -1,0 +1,23 @@
+name: CI - cartservice
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/cartservice/**'
+      - '.github/workflows/ci-cartservice.yaml'
+      - '.github/workflows/build-push-update.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ci-cartservice-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-push-update:
+    uses: ./.github/workflows/build-push-update.yml
+    with:
+      service: cartservice
+      context: src/cartservice/src
+    secrets: inherit

@@ -1,0 +1,23 @@
+name: CI - currencyservice
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/currencyservice/**'
+      - '.github/workflows/ci-currencyservice.yaml'
+      - '.github/workflows/build-push-update.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ci-currencyservice-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-push-update:
+    uses: ./.github/workflows/build-push-update.yml
+    with:
+      service: currencyservice
+      context: src/currencyservice
+    secrets: inherit

@@ -1,0 +1,23 @@
+name: CI - adservice
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/adservice/**'
+      - '.github/workflows/ci-adservice.yaml'
+      - '.github/workflows/build-push-update.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ci-adservice-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-push-update:
+    uses: ./.github/workflows/build-push-update.yml
+    with:
+      service: adservice
+      context: src/adservice
+    secrets: inherit

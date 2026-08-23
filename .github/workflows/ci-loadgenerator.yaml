@@ -1,0 +1,23 @@
+name: CI - loadgenerator
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/loadgenerator/**'
+      - '.github/workflows/ci-loadgenerator.yaml'
+      - '.github/workflows/build-push-update.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ci-loadgenerator-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-push-update:
+    uses: ./.github/workflows/build-push-update.yml
+    with:
+      service: loadgenerator
+      context: src/loadgenerator
+    secrets: inherit

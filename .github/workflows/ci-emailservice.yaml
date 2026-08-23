@@ -1,0 +1,23 @@
+name: CI - emailservice
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/emailservice/**'
+      - '.github/workflows/ci-emailservice.yaml'
+      - '.github/workflows/build-push-update.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ci-emailservice-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-push-update:
+    uses: ./.github/workflows/build-push-update.yml
+    with:
+      service: emailservice
+      context: src/emailservice
+    secrets: inherit

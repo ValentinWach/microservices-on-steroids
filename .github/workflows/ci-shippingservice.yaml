@@ -1,0 +1,23 @@
+name: CI - shippingservice
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/shippingservice/**'
+      - '.github/workflows/ci-shippingservice.yaml'
+      - '.github/workflows/build-push-update.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ci-shippingservice-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-push-update:
+    uses: ./.github/workflows/build-push-update.yml
+    with:
+      service: shippingservice
+      context: src/shippingservice
+    secrets: inherit
