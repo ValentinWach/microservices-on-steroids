@@ -7,7 +7,7 @@ on:
     paths:
       - 'src/frontend/**'
       - '.github/workflows/ci-frontend.yaml'
-      - '.github/workflows/build-push-update.yml'
+      - '.github/workflows/build-push.yml'
   workflow_dispatch:
 
 concurrency:
@@ -16,10 +16,8 @@ concurrency:
 
 jobs:
   build-push-update:
-    uses: ./.github/workflows/build-push-update.yml
+    uses: ./.github/workflows/build-push.yml
     with:
       service: frontend
       context: src/frontend
     secrets: inherit
-    permissions:
-      contents: write

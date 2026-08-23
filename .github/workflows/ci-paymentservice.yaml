@@ -7,7 +7,7 @@ on:
     paths:
       - 'src/paymentservice/**'
       - '.github/workflows/ci-paymentservice.yaml'
-      - '.github/workflows/build-push-update.yml'
+      - '.github/workflows/build-push.yml'
   workflow_dispatch:
 
 concurrency:
@@ -16,10 +16,8 @@ concurrency:
 
 jobs:
   build-push-update:
-    uses: ./.github/workflows/build-push-update.yml
+    uses: ./.github/workflows/build-push.yml
     with:
       service: paymentservice
       context: src/paymentservice
     secrets: inherit
-    permissions:
-      contents: write
