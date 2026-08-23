@@ -52,6 +52,7 @@ jobs:
           git config user.name "github-actions-bot"
           git config user.email "contact@valentinwach.de"
 
+          git pull
           git add "kubernetes-manifests/${SERVICE}.yaml"
           if git diff --staged --quiet; then
             echo "No manifest changes to commit."
