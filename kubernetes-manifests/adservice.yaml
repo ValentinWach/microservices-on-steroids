@@ -43,7 +43,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: adservice
+        image: registry.vwach.de/adservice:8143980a8f1fbcd01cea49ec3f941496c59458b3
         ports:
         - containerPort: 9555
         env:
