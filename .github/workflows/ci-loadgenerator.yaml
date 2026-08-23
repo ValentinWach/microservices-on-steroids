@@ -21,3 +21,5 @@ jobs:
       service: loadgenerator
       context: src/loadgenerator
     secrets: inherit
+    permissions:
+      contents: write

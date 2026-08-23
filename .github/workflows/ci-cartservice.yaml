@@ -21,3 +21,6 @@ jobs:
       service: cartservice
       context: src/cartservice/src
     secrets: inherit
+    permissions:
+      contents: write
+

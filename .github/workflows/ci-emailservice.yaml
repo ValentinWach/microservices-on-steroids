@@ -21,3 +21,5 @@ jobs:
       service: emailservice
       context: src/emailservice
     secrets: inherit
+    permissions:
+      contents: write

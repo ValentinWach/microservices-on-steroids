@@ -21,3 +21,5 @@ jobs:
       service: productcatalogservice
       context: src/productcatalogservice
     secrets: inherit
+    permissions:
+      contents: write

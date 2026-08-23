@@ -21,3 +21,5 @@ jobs:
       service: adservice
       context: src/adservice
     secrets: inherit
+    permissions:
+      contents: write

@@ -21,3 +21,5 @@ jobs:
       service: frontend
       context: src/frontend
     secrets: inherit
+    permissions:
+      contents: write

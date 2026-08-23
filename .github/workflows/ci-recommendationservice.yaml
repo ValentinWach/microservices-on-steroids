@@ -21,3 +21,5 @@ jobs:
       service: recommendationservice
       context: src/recommendationservice
     secrets: inherit
+    permissions:
+      contents: write

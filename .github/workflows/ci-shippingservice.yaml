@@ -21,3 +21,5 @@ jobs:
       service: shippingservice
       context: src/shippingservice
     secrets: inherit
+    permissions:
+      contents: write

@@ -21,3 +21,5 @@ jobs:
       service: paymentservice
       context: src/paymentservice
     secrets: inherit
+    permissions:
+      contents: write

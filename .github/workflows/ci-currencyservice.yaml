@@ -21,3 +21,5 @@ jobs:
       service: currencyservice
       context: src/currencyservice
     secrets: inherit
+    permissions:
+      contents: write

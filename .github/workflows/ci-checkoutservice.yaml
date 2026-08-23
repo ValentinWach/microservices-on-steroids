@@ -21,3 +21,6 @@ jobs:
       service: checkoutservice
       context: src/checkoutservice
     secrets: inherit
+    permissions:
+      contents: write
+
