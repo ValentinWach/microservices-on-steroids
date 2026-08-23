@@ -43,7 +43,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: cartservice
+        image: registry.vwach.de/cartservice:8143980a8f1fbcd01cea49ec3f941496c59458b3
         ports:
         - containerPort: 7070
         env:
@@ -115,7 +115,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: redis:alpine
+        image: registry.vwach.de/cartservice:8143980a8f1fbcd01cea49ec3f941496c59458b3
         ports:
         - containerPort: 6379
         readinessProbe:
