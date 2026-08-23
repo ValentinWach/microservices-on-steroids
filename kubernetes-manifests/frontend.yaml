@@ -44,7 +44,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: registry.vwach.de/frontend:f43ef6efd6b92f26bcb57203cc5e36ffef55052e
+          image: registry.vwach.de/frontend:861da7de5df20386bdf54ad86edcd349caa41409
           ports:
           - containerPort: 8080
           readinessProbe:

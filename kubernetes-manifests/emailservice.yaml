@@ -43,7 +43,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: emailservice
+        image: registry.vwach.de/emailservice:861da7de5df20386bdf54ad86edcd349caa41409
         ports:
         - containerPort: 8080
         env:

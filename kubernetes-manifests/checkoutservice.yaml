@@ -42,7 +42,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: checkoutservice
+          image: registry.vwach.de/checkoutservice:861da7de5df20386bdf54ad86edcd349caa41409
           ports:
           - containerPort: 5050
           readinessProbe:
