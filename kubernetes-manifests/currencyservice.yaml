@@ -43,7 +43,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: currencyservice
+        image: registry.vwach.de/currencyservice:8143980a8f1fbcd01cea49ec3f941496c59458b3
         ports:
         - name: grpc
           containerPort: 7000
