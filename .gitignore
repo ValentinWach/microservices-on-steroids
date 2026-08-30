@@ -2,6 +2,7 @@
 .eclipse.buildship.core.prefs
 .gradle/
 .idea/
+.terraform/
 .kubernetes-manifests-*/
 .project
 .skaffold-*.yaml
@@ -10,6 +11,7 @@
 .venv/
 .vs/
 .vscode/
+.secrets/
 *.iml
 *.ipr
 *.iws
@@ -27,3 +29,5 @@ pkg/
 release/wi-kubernetes-manifests.yaml
 vendor/
 gha-creds-*.json
+talos-config.yml 
+k8s-config.yml

@@ -1,27 +1,23 @@
-# Copyright 2022 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-terraform {
-  required_providers {
-    google = {
-      source  = "hashicorp/google"
-      version = "7.43.0"
-    }
-  }
+provider "kubernetes" {
+  host                   = module.kubernetes.kubeconfig_data.server
+  cluster_ca_certificate = module.kubernetes.kubeconfig_data.ca
+  client_certificate     = module.kubernetes.kubeconfig_data.cert
+  client_key             = module.kubernetes.kubeconfig_data.key
 }
 
-provider "google" {
-  project = var.gcp_project_id
-  region  = var.region
+provider "flux" {
+  kubernetes = {
+    host                   = module.kubernetes.kubeconfig_data.server
+    cluster_ca_certificate = module.kubernetes.kubeconfig_data.ca
+    client_certificate     = module.kubernetes.kubeconfig_data.cert
+    client_key             = module.kubernetes.kubeconfig_data.key
+  }
+
+  git = {
+    url = "ssh://git@github.com/${var.github_owner}/${var.repository_name}.git"
+    ssh = {
+      username    = "git"
+      private_key = file(abspath("${path.module}/${var.flux_ssh_private_key_path}"))
+    }
+  }
 }

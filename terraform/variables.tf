@@ -1,47 +1,52 @@
-# Copyright 2022 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-variable "gcp_project_id" {
-  type        = string
-  description = "The GCP project ID to apply this config to"
+variable "hcloud_token" {
+  type      = string
+  sensitive = true
 }
 
-variable "name" {
+variable "github_owner" {
+  description = "GitHub owner (organization or user)"
   type        = string
-  description = "Name given to the new GKE cluster"
-  default     = "online-boutique"
+  default     = "ValentinWach"
 }
 
-variable "region" {
+variable "repository_name" {
+  description = "Name of the GitHub repository for Flux"
   type        = string
-  description = "Region of the new GKE cluster"
-  default     = "us-central1"
+  default     = "microservices-on-steroids"
 }
 
-variable "namespace" {
+variable "cluster_name" {
+  description = "Name of the Kubernetes cluster"
   type        = string
-  description = "Kubernetes Namespace in which the Online Boutique resources are to be deployed"
-  default     = "default"
+  default     = "k8s"
 }
 
-variable "filepath_manifest" {
+variable "cluster_kubeconfig_path" {
+  description = "Path to the kubeconfig file"
   type        = string
-  description = "Path to Online Boutique's Kubernetes resources, written using Kustomize"
-  default     = "../kustomize/"
+  default     = "../k8s-config.yml"
 }
 
-variable "memorystore" {
-  type        = bool
-  description = "If true, Online Boutique's in-cluster Redis cache will be replaced with a Google Cloud Memorystore Redis cache"
+variable "cluster_talosconfig_path" {
+  description = "Path to the Talos config file"
+  type        = string
+  default     = "../talos-config.yml"
+}
+
+variable "flux_ssh_private_key_path" {
+  description = "Path to the SSH private key for Flux Git access"
+  type        = string
+  default     = "../.secrets/flux-deploy-key"
+}
+
+variable "sealed_secrets_cert_path" {
+  description = "Path to the Sealed Secrets TLS certificate"
+  type        = string
+  default     = "../.secrets/sealed-secrets-master.crt"
+}
+
+variable "sealed_secrets_key_path" {
+  description = "Path to the Sealed Secrets TLS private key"
+  type        = string
+  default     = "../.secrets/sealed-secrets-master.key"
 }
