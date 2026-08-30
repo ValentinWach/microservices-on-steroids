@@ -115,7 +115,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: registry.vwach.de/cartservice:861da7de5df20386bdf54ad86edcd349caa41409
+        image: redis:alpine
         ports:
         - containerPort: 6379
         readinessProbe:
