@@ -1,4 +1,6 @@
 resource "kubernetes_namespace_v1" "sealed_secrets" {
+  depends_on = [module.kubernetes]
+
   metadata {
     name = "sealed-secrets"
   }

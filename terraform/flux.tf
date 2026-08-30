@@ -15,4 +15,6 @@ resource "flux_bootstrap_git" "flux" {
   namespace = "flux-system"
 
   version = "v2.8.7"
+
+  delete_git_manifests = false
 }
