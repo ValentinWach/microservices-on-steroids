@@ -31,3 +31,5 @@ vendor/
 gha-creds-*.json
 talos-config.yml 
 k8s-config.yml
+talos-config.yml.bak
+k8s-config.yml.bak

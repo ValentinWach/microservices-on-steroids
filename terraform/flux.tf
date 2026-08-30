@@ -1,7 +1,7 @@
 resource "flux_bootstrap_git" "flux" {
   depends_on = [
     module.kubernetes,
-    kubernetes_secret_v1.sealed_secrets_master_key,
+    helm_release.sealed-secrets,
   ]
   path = "kubernetes-manifests"
 
