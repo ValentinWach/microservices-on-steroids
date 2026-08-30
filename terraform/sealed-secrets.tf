@@ -1,9 +1,15 @@
+resource "kubernetes_namespace_v1" "sealed_secrets" {
+  metadata {
+    name = "sealed-secrets"
+  }
+}
+
 resource "kubernetes_secret_v1" "sealed-secrets-master-key" {
   depends_on = [module.kubernetes]
 
   metadata {
     name      = "sealed-secrets-key"
-    namespace = "kube-system"
+    namespace = kubernetes_namespace_v1.sealed_secrets.metadata[0].name
     labels = {
       "sealedsecrets.bitnami.com/sealed-secrets-key" = "active"
     }
@@ -20,7 +26,7 @@ resource "helm_release" "sealed-secrets" {
   depends_on = [kubernetes_secret_v1.sealed-secrets-master-key]
   chart      = "sealed-secrets"
   name       = "sealed-secrets"
-  namespace  = "sealed-secrets"
+  namespace = kubernetes_namespace_v1.sealed_secrets.metadata[0].name
   repository = "https://bitnami.github.io/sealed-secrets"
-  create_namespace = true
+  create_namespace = false
 }
