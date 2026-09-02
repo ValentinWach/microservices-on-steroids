@@ -137,6 +137,7 @@ spec:
   infrastructure:
     annotations:
       load-balancer.hetzner.cloud/location: "fsn1"
+      load-balancer.hetzner.cloud/uses-proxyprotocol: "false"
   listeners:
     - name: https
       hostname: shop.vwach.de

@@ -8,8 +8,9 @@ module "kubernetes" {
   cluster_kubeconfig_path  = abspath("${path.module}/${var.cluster_kubeconfig_path}")
   cluster_talosconfig_path = abspath("${path.module}/${var.cluster_talosconfig_path}")
 
-  cert_manager_enabled       = true
-  cilium_gateway_api_enabled = true
+  cert_manager_enabled                      = true
+  cilium_gateway_api_enabled                = true
+  cilium_gateway_api_proxy_protocol_enabled = false
 
   cluster_delete_protection  = false
 
