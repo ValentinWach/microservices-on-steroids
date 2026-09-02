@@ -1,0 +1,17 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt
+spec:
+  acme:
+    email: contact@valentinwach.de
+    server: https://acme-v02.api.letsencrypt.org/directory   # prod
+    privateKeySecretRef:
+      name: letsencrypt-http01-key
+    solvers:
+      - http01:
+          gatewayHTTPRoute:
+            parentRefs:
+              - name: shop-gateway
+                namespace: online-shop
+                kind: Gateway

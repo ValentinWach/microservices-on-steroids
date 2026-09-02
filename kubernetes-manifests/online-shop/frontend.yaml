@@ -124,3 +124,71 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: frontend
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: shop-gateway
+  namespace: online-shop
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  gatewayClassName: cilium
+  infrastructure:
+    annotations:
+      load-balancer.hetzner.cloud/location: "fsn1"
+  listeners:
+    - name: https
+      hostname: shop.vwach.de
+      port: 443
+      protocol: HTTPS
+      allowedRoutes:
+        namespaces:
+          from: Same
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: shop-tls
+            kind: Secret
+    - name: http
+      hostname: shop.vwach.de
+      port: 80
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: Same
+
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: frontend
+  namespace: online-shop
+spec:
+  parentRefs:
+    - name: shop-gateway
+      sectionName: https
+  hostnames:
+    - shop.vwach.de
+  rules:
+    - backendRefs:
+        - name: frontend
+          port: 80
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: frontend-redirect
+  namespace: online-shop
+spec:
+  parentRefs:
+    - name: shop-gateway
+      sectionName: http
+  hostnames:
+    - shop.vwach.de
+  rules:
+    - filters:
+        - type: RequestRedirect
+          requestRedirect:
+            scheme: https
+            statusCode: 301

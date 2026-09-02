@@ -4,6 +4,7 @@ namespace: online-shop
 resources:
  - namespace.yaml
  - registry-creds.yaml
+ - cluster-issuer.yaml
  - adservice.yaml
  - cartservice.yaml
  - checkoutservice.yaml
