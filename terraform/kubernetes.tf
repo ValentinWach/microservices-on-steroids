@@ -18,6 +18,6 @@ module "kubernetes" {
     { name = "control", type = "cx23", location = "fsn1", count = 1 }
   ]
   worker_nodepools = [
-    { name = "worker", type = "cx23", location = "fsn1", count = 1 }
+    { name = "worker", type = "cx33", location = "fsn1", count = 1 }
   ]
 }

@@ -39,6 +39,24 @@ variable "flux_ssh_private_key_path" {
   default     = "../.secrets/flux-deploy-key"
 }
 
+variable "flux_known_hosts" {
+  description = "SSH known_hosts entry for the Flux Git host (GitHub)"
+  type        = string
+  default     = "github.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg="
+}
+
+variable "flux_operator_chart_version" {
+  description = "Helm chart version of flux-operator"
+  type        = string
+  default     = "0.61.0"
+}
+
+variable "flux_version" {
+  description = "Flux distribution version range managed by FluxInstance"
+  type        = string
+  default     = "2.8.x"
+}
+
 variable "sealed_secrets_cert_path" {
   description = "Path to the Sealed Secrets TLS certificate"
   type        = string
