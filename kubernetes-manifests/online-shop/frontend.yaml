@@ -88,6 +88,12 @@ spec:
           #   value: "aws"
           - name: ENABLE_PROFILER
             value: "0"
+          - name: ENABLE_TRACING
+            value: "1"
+          - name: COLLECTOR_SERVICE_ADDR
+            value: "jaeger:4317"
+          - name: OTEL_SERVICE_NAME
+            value: "frontend"
           # - name: CYMBAL_BRANDING
           #   value: "true"
           # - name: ENABLE_ASSISTANT
