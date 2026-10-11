@@ -21,7 +21,6 @@ import (
 	"html/template"
 	"io"
 	"math/rand"
-	"net"
 	"net/http"
 	"os"
 	"strconv"
