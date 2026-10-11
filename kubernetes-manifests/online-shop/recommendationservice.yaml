@@ -27,6 +27,7 @@ spec:
       labels:
         app: recommendationservice
     spec:
+      replicas: 3
       serviceAccountName: recommendationservice
       terminationGracePeriodSeconds: 5
       securityContext:
@@ -43,7 +44,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: registry.vwach.de/recommendationservice:861da7de5df20386bdf54ad86edcd349caa41409
+        image: registry.vwach.de/recommendationservice:3f072b1034231afa7894d848abfef6595577bf4b
         ports:
         - containerPort: 8080
         readinessProbe:
