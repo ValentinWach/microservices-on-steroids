@@ -19,6 +19,7 @@ metadata:
   labels:
     app: recommendationservice
 spec:
+  replicas: 3
   selector:
     matchLabels:
       app: recommendationservice
@@ -27,7 +28,6 @@ spec:
       labels:
         app: recommendationservice
     spec:
-      replicas: 3
       serviceAccountName: recommendationservice
       terminationGracePeriodSeconds: 5
       securityContext:
@@ -44,7 +44,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: registry.vwach.de/recommendationservice:3f072b1034231afa7894d848abfef6595577bf4b
+        image: registry.vwach.de/recommendationservice:11e52018210b36a03e9ad20f8f901c3aead95e55
         ports:
         - containerPort: 8080
         readinessProbe:
