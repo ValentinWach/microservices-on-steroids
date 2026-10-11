@@ -24,7 +24,7 @@ import (
 )
 
 const (
-	avoidNoopCurrencyConversionRPC = false
+	avoidNoopCurrencyConversionRPC = true
 )
 
 func (fe *frontendServer) getCurrencies(ctx context.Context) ([]string, error) {

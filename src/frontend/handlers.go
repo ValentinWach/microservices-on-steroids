@@ -96,12 +96,6 @@ func (fe *frontendServer) homeHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("env platform is either empty or invalid")
 		env = "local"
 	}
-	// Autodetect GCP
-	addrs, err := net.LookupHost("metadata.google.internal.")
-	if err == nil && len(addrs) >= 0 {
-		log.Debugf("Detected Google metadata server: %v, setting ENV_PLATFORM to GCP.", addrs)
-		env = "gcp"
-	}
 
 	log.Debugf("ENV_PLATFORM is: %s", env)
 	plat = platformDetails{}
