@@ -41,10 +41,10 @@ spec:
           allowPrivilegeEscalation: false
           capabilities:
             drop:
-              - ALL
+            - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: registry.vwach.de/recommendationservice:11e52018210b36a03e9ad20f8f901c3aead95e55 # {"$imagepolicy": "flux-system:recommendationservice"}
+        image: registry.vwach.de/recommendationservice:20261013-025819-ada6582 # {"$imagepolicy": "flux-system:recommendationservice"}
         ports:
         - containerPort: 8080
         readinessProbe:
