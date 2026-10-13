@@ -30,6 +30,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
+	"golang.org/x/sync/errgroup"
 
 	pb "github.com/GoogleCloudPlatform/microservices-demo/src/frontend/genproto"
 	"github.com/GoogleCloudPlatform/microservices-demo/src/frontend/money"
@@ -151,28 +152,42 @@ func (fe *frontendServer) productHandler(w http.ResponseWriter, r *http.Request)
 		renderHTTPError(log, r, w, errors.Wrap(err, "could not retrieve product"), http.StatusInternalServerError)
 		return
 	}
-	currencies, err := fe.getCurrencies(r.Context())
-	if err != nil {
-		renderHTTPError(log, r, w, errors.Wrap(err, "could not retrieve currencies"), http.StatusInternalServerError)
-		return
-	}
 
-	cart, err := fe.getCart(r.Context(), sessionID(r))
-	if err != nil {
-		renderHTTPError(log, r, w, errors.Wrap(err, "could not retrieve cart"), http.StatusInternalServerError)
+	var (
+		currencies      []string
+		cart            []*pb.CartItem
+		price           *pb.Money
+		recommendations []*pb.Product
+		ad              *pb.Ad
+	)
+	g, gctx := errgroup.WithContext(r.Context())
+	g.Go(func() (err error) {
+		currencies, err = fe.getCurrencies(gctx)
+		return errors.Wrap(err, "could not retrieve currencies")
+	})
+	g.Go(func() (err error) {
+		cart, err = fe.getCart(gctx, sessionID(r))
+		return errors.Wrap(err, "could not retrieve cart")
+	})
+	g.Go(func() (err error) {
+		price, err = fe.convertCurrency(gctx, p.GetPriceUsd(), currentCurrency(r))
+		return errors.Wrap(err, "failed to convert currency")
+	})
+	g.Go(func() error {
+		var err error
+		recommendations, err = fe.getRecommendations(gctx, sessionID(r), []string{id})
+		if err != nil {
+			log.WithField("error", err).Warn("failed to get product recommendations")
+		}
+		return nil
+	})
+	g.Go(func() error {
+		ad = fe.chooseAd(gctx, p.Categories, log)
+		return nil
+	})
+	if err := g.Wait(); err != nil {
+		renderHTTPError(log, r, w, err, http.StatusInternalServerError)
 		return
-	}
-
-	price, err := fe.convertCurrency(r.Context(), p.GetPriceUsd(), currentCurrency(r))
-	if err != nil {
-		renderHTTPError(log, r, w, errors.Wrap(err, "failed to convert currency"), http.StatusInternalServerError)
-		return
-	}
-
-	// ignores the error retrieving recommendations since it is not critical
-	recommendations, err := fe.getRecommendations(r.Context(), sessionID(r), []string{id})
-	if err != nil {
-		log.WithField("error", err).Warn("failed to get product recommendations")
 	}
 
 	product := struct {
@@ -191,7 +206,7 @@ func (fe *frontendServer) productHandler(w http.ResponseWriter, r *http.Request)
 	}
 
 	if err := templates.ExecuteTemplate(w, "product", injectCommonTemplateData(r, map[string]interface{}{
-		"ad":              fe.chooseAd(r.Context(), p.Categories, log),
+		"ad":              ad,
 		"show_currency":   true,
 		"currencies":      currencies,
 		"product":         product,
@@ -257,43 +272,57 @@ func (fe *frontendServer) viewCartHandler(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	// ignores the error retrieving recommendations since it is not critical
-	recommendations, err := fe.getRecommendations(r.Context(), sessionID(r), cartIDs(cart))
-	if err != nil {
-		log.WithField("error", err).Warn("failed to get product recommendations")
-	}
-
-	shippingCost, err := fe.getShippingQuote(r.Context(), cart, currentCurrency(r))
-	if err != nil {
-		renderHTTPError(log, r, w, errors.Wrap(err, "failed to get shipping quote"), http.StatusInternalServerError)
-		return
-	}
-
 	type cartItemView struct {
 		Item     *pb.Product
 		Quantity int32
 		Price    *pb.Money
 	}
-	items := make([]cartItemView, len(cart))
-	totalPrice := pb.Money{CurrencyCode: currentCurrency(r)}
+	var (
+		recommendations []*pb.Product
+		shippingCost    *pb.Money
+		items           = make([]cartItemView, len(cart))
+		currency        = currentCurrency(r)
+	)
+	g, gctx := errgroup.WithContext(r.Context())
+	g.Go(func() error {
+		// ignores the error retrieving recommendations since it is not critical
+		var err error
+		recommendations, err = fe.getRecommendations(gctx, sessionID(r), cartIDs(cart))
+		if err != nil {
+			log.WithField("error", err).Warn("failed to get product recommendations")
+		}
+		return nil
+	})
+	g.Go(func() (err error) {
+		shippingCost, err = fe.getShippingQuote(gctx, cart, currency)
+		return errors.Wrap(err, "failed to get shipping quote")
+	})
 	for i, item := range cart {
-		p, err := fe.getProduct(r.Context(), item.GetProductId())
-		if err != nil {
-			renderHTTPError(log, r, w, errors.Wrapf(err, "could not retrieve product #%s", item.GetProductId()), http.StatusInternalServerError)
-			return
-		}
-		price, err := fe.convertCurrency(r.Context(), p.GetPriceUsd(), currentCurrency(r))
-		if err != nil {
-			renderHTTPError(log, r, w, errors.Wrapf(err, "could not convert currency for product #%s", item.GetProductId()), http.StatusInternalServerError)
-			return
-		}
+		g.Go(func() error {
+			p, err := fe.getProduct(gctx, item.GetProductId())
+			if err != nil {
+				return errors.Wrapf(err, "could not retrieve product #%s", item.GetProductId())
+			}
+			price, err := fe.convertCurrency(gctx, p.GetPriceUsd(), currency)
+			if err != nil {
+				return errors.Wrapf(err, "could not convert currency for product #%s", item.GetProductId())
+			}
+			multPrice := money.MultiplySlow(*price, uint32(item.GetQuantity()))
+			items[i] = cartItemView{
+				Item:     p,
+				Quantity: item.GetQuantity(),
+				Price:    &multPrice}
+			return nil
+		})
+	}
+	if err := g.Wait(); err != nil {
+		renderHTTPError(log, r, w, err, http.StatusInternalServerError)
+		return
+	}
 
-		multPrice := money.MultiplySlow(*price, uint32(item.GetQuantity()))
-		items[i] = cartItemView{
-			Item:     p,
-			Quantity: item.GetQuantity(),
-			Price:    &multPrice}
-		totalPrice = money.Must(money.Sum(totalPrice, multPrice))
+	totalPrice := pb.Money{CurrencyCode: currency}
+	for _, item := range items {
+		totalPrice = money.Must(money.Sum(totalPrice, *item.Price))
 	}
 	totalPrice = money.Must(money.Sum(totalPrice, *shippingCost))
 	year := time.Now().Year()
