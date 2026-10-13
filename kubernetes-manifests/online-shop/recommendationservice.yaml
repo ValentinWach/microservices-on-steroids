@@ -19,7 +19,6 @@ metadata:
   labels:
     app: recommendationservice
 spec:
-  replicas: 3
   selector:
     matchLabels:
       app: recommendationservice
