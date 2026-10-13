@@ -48,11 +48,7 @@ data:
             type: status_code
             status_code:
               status_codes: [ERROR]
-          - name: baseline
-            type: probabilistic
-            probabilistic:
-              sampling_percentage: 2
-
+         
       batch: {}
 
     exporters:
