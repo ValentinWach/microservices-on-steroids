@@ -1,0 +1,150 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: adservice
+  namespace: online-shop
+spec:
+  image: registry.vwach.de/adservice
+  interval: 3m
+  secretRef:
+    name: registry-creds
+  accessFrom:
+    namespaceSelectors:
+      - matchLabels:
+          kubernetes.io/metadata.name: flux-system
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: cartservice
+  namespace: online-shop
+spec:
+  image: registry.vwach.de/cartservice
+  interval: 3m
+  secretRef:
+    name: registry-creds
+  accessFrom:
+    namespaceSelectors:
+      - matchLabels:
+          kubernetes.io/metadata.name: flux-system
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: checkoutservice
+  namespace: online-shop
+spec:
+  image: registry.vwach.de/checkoutservice
+  interval: 3m
+  secretRef:
+    name: registry-creds
+  accessFrom:
+    namespaceSelectors:
+      - matchLabels:
+          kubernetes.io/metadata.name: flux-system
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: currencyservice
+  namespace: online-shop
+spec:
+  image: registry.vwach.de/currencyservice
+  interval: 3m
+  secretRef:
+    name: registry-creds
+  accessFrom:
+    namespaceSelectors:
+      - matchLabels:
+          kubernetes.io/metadata.name: flux-system
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: emailservice
+  namespace: online-shop
+spec:
+  image: registry.vwach.de/emailservice
+  interval: 3m
+  secretRef:
+    name: registry-creds
+  accessFrom:
+    namespaceSelectors:
+      - matchLabels:
+          kubernetes.io/metadata.name: flux-system
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: frontend
+  namespace: online-shop
+spec:
+  image: registry.vwach.de/frontend
+  interval: 3m
+  secretRef:
+    name: registry-creds
+  accessFrom:
+    namespaceSelectors:
+      - matchLabels:
+          kubernetes.io/metadata.name: flux-system
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: paymentservice
+  namespace: online-shop
+spec:
+  image: registry.vwach.de/paymentservice
+  interval: 3m
+  secretRef:
+    name: registry-creds
+  accessFrom:
+    namespaceSelectors:
+      - matchLabels:
+          kubernetes.io/metadata.name: flux-system
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: productcatalogservice
+  namespace: online-shop
+spec:
+  image: registry.vwach.de/productcatalogservice
+  interval: 3m
+  secretRef:
+    name: registry-creds
+  accessFrom:
+    namespaceSelectors:
+      - matchLabels:
+          kubernetes.io/metadata.name: flux-system
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: recommendationservice
+  namespace: online-shop
+spec:
+  image: registry.vwach.de/recommendationservice
+  interval: 3m
+  secretRef:
+    name: registry-creds
+  accessFrom:
+    namespaceSelectors:
+      - matchLabels:
+          kubernetes.io/metadata.name: flux-system
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageRepository
+metadata:
+  name: shippingservice
+  namespace: online-shop
+spec:
+  image: registry.vwach.de/shippingservice
+  interval: 3m
+  secretRef:
+    name: registry-creds
+  accessFrom:
+    namespaceSelectors:
+      - matchLabels:
+          kubernetes.io/metadata.name: flux-system

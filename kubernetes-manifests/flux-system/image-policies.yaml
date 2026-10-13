@@ -1,0 +1,160 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: adservice
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: adservice
+    namespace: online-shop
+  filterTags:
+    pattern: '^(?P<date>[0-9]{8})-(?P<time>[0-9]{6})-[a-f0-9]{7}$'
+    extract: '${date}${time}'
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: cartservice
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: cartservice
+    namespace: online-shop
+  filterTags:
+    pattern: '^(?P<date>[0-9]{8})-(?P<time>[0-9]{6})-[a-f0-9]{7}$'
+    extract: '${date}${time}'
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: checkoutservice
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: checkoutservice
+    namespace: online-shop
+  filterTags:
+    pattern: '^(?P<date>[0-9]{8})-(?P<time>[0-9]{6})-[a-f0-9]{7}$'
+    extract: '${date}${time}'
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: currencyservice
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: currencyservice
+    namespace: online-shop
+  filterTags:
+    pattern: '^(?P<date>[0-9]{8})-(?P<time>[0-9]{6})-[a-f0-9]{7}$'
+    extract: '${date}${time}'
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: emailservice
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: emailservice
+    namespace: online-shop
+  filterTags:
+    pattern: '^(?P<date>[0-9]{8})-(?P<time>[0-9]{6})-[a-f0-9]{7}$'
+    extract: '${date}${time}'
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: frontend
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: frontend
+    namespace: online-shop
+  filterTags:
+    pattern: '^(?P<date>[0-9]{8})-(?P<time>[0-9]{6})-[a-f0-9]{7}$'
+    extract: '${date}${time}'
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: paymentservice
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: paymentservice
+    namespace: online-shop
+  filterTags:
+    pattern: '^(?P<date>[0-9]{8})-(?P<time>[0-9]{6})-[a-f0-9]{7}$'
+    extract: '${date}${time}'
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: productcatalogservice
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: productcatalogservice
+    namespace: online-shop
+  filterTags:
+    pattern: '^(?P<date>[0-9]{8})-(?P<time>[0-9]{6})-[a-f0-9]{7}$'
+    extract: '${date}${time}'
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: recommendationservice
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: recommendationservice
+    namespace: online-shop
+  filterTags:
+    pattern: '^(?P<date>[0-9]{8})-(?P<time>[0-9]{6})-[a-f0-9]{7}$'
+    extract: '${date}${time}'
+  policy:
+    numerical:
+      order: asc
+---
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: shippingservice
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: shippingservice
+    namespace: online-shop
+  filterTags:
+    pattern: '^(?P<date>[0-9]{8})-(?P<time>[0-9]{6})-[a-f0-9]{7}$'
+    extract: '${date}${time}'
+  policy:
+    numerical:
+      order: asc

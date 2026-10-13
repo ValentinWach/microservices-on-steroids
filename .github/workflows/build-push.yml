@@ -26,10 +26,17 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
+      - name: Compute sortable tag
+        id: tag
+        run: |
+          ts=$(TZ=UTC git log -1 --format=%cd --date=format-local:%Y%m%d-%H%M%S)
+          echo "value=${ts}-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
       - name: Build and push image
         uses: docker/build-push-action@v6
         with:
           context: ${{ inputs.context }}
           push: true
-          tags: ${{ secrets.REGISTRY_HOST }}/${{ inputs.service }}:${{ github.sha }}
+          tags: |
+            ${{ secrets.REGISTRY_HOST }}/${{ inputs.service }}:${{ steps.tag.outputs.value }}
           platforms: linux/amd64

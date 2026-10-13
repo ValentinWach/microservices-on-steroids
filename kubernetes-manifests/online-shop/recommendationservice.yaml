@@ -44,7 +44,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: registry.vwach.de/recommendationservice:11e52018210b36a03e9ad20f8f901c3aead95e55
+        image: registry.vwach.de/recommendationservice:11e52018210b36a03e9ad20f8f901c3aead95e55 # {"$imagepolicy": "flux-system:recommendationservice"}
         ports:
         - containerPort: 8080
         readinessProbe:

@@ -63,6 +63,8 @@ resource "helm_release" "flux_instance" {
           "kustomize-controller",
           "helm-controller",
           "notification-controller",
+          "image-reflector-controller",
+          "image-automation-controller"
         ]
         cluster = {
           type   = "kubernetes"

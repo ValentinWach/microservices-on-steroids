@@ -1,0 +1,28 @@
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImageUpdateAutomation
+metadata:
+  name: online-shop
+  namespace: flux-system
+spec:
+  interval: 3m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: contact@valentinwach.de
+        name: fluxcdbot
+      messageTemplate: |
+        chore(images): update online-shop image tags
+
+        {{range .Changed.Changes}}- {{.OldValue}} -> {{.NewValue}}
+        {{end}}
+    push:
+      branch: main
+  update:
+    path: ./kubernetes-manifests/online-shop
+    strategy: Setters
