@@ -18,12 +18,14 @@ spec:
         - name: jaeger
           image: jaegertracing/all-in-one:1.76.0
           args:
-            - --memory.max-traces=10000
+            - --memory.max-traces=3000
           env:
             - name: COLLECTOR_OTLP_ENABLED
               value: "true"
             - name: SPAN_STORAGE_TYPE
               value: memory
+            - name: GOMEMLIMIT
+              value: "400MiB"
           ports:
             - name: ui
               containerPort: 16686
@@ -43,11 +45,11 @@ spec:
             initialDelaySeconds: 10
           resources:
             requests:
-              cpu: 100m
-              memory: 512Mi
+              cpu: 50m
+              memory: 256Mi
             limits:
               cpu: 500m
-              memory: 1024Mi
+              memory: 512Mi
 ---
 apiVersion: v1
 kind: Service

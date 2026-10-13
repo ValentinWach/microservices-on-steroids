@@ -55,7 +55,7 @@ spec:
         - name: ENABLE_TRACING
           value: "1"
         - name: COLLECTOR_SERVICE_ADDR
-          value: "jaeger:4317"
+          value: "otel-collector:4317"
         - name: OTEL_SERVICE_NAME
           value: "currencyservice"
         readinessProbe:
