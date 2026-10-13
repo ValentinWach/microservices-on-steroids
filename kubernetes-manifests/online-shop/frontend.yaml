@@ -44,7 +44,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: registry.vwach.de/frontend:20261013-025819-ada6582 # {"$imagepolicy": "flux-system:frontend"}
+          image: registry.vwach.de/frontend:20261013-072131-7c18df3 # {"$imagepolicy": "flux-system:frontend"}
           ports:
             - containerPort: 8080
           readinessProbe:
