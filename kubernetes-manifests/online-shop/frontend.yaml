@@ -44,56 +44,56 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: registry.vwach.de/frontend:1b2cdaf9f711244efc6b897e8ed4227313193094 # {"$imagepolicy": "flux-system:frontend"}
+          image: registry.vwach.de/frontend:20261013-025819-ada6582 # {"$imagepolicy": "flux-system:frontend"}
           ports:
-          - containerPort: 8080
+            - containerPort: 8080
           readinessProbe:
             initialDelaySeconds: 10
             httpGet:
               path: "/_healthz"
               port: 8080
               httpHeaders:
-              - name: "Cookie"
-                value: "shop_session-id=x-readiness-probe"
+                - name: "Cookie"
+                  value: "shop_session-id=x-readiness-probe"
           livenessProbe:
             initialDelaySeconds: 10
             httpGet:
               path: "/_healthz"
               port: 8080
               httpHeaders:
-              - name: "Cookie"
-                value: "shop_session-id=x-liveness-probe"
+                - name: "Cookie"
+                  value: "shop_session-id=x-liveness-probe"
           env:
-          - name: PORT
-            value: "8080"
-          - name: PRODUCT_CATALOG_SERVICE_ADDR
-            value: "productcatalogservice:3550"
-          - name: CURRENCY_SERVICE_ADDR
-            value: "currencyservice:7000"
-          - name: CART_SERVICE_ADDR
-            value: "cartservice:7070"
-          - name: RECOMMENDATION_SERVICE_ADDR
-            value: "recommendationservice:8080"
-          - name: SHIPPING_SERVICE_ADDR
-            value: "shippingservice:50051"
-          - name: CHECKOUT_SERVICE_ADDR
-            value: "checkoutservice:5050"
-          - name: AD_SERVICE_ADDR
-            value: "adservice:9555"
-          - name: SHOPPING_ASSISTANT_SERVICE_ADDR
-            value: "shoppingassistantservice:80"
-          # # ENV_PLATFORM: One of: local, gcp, aws, azure, onprem, alibaba
-          # # When not set, defaults to "local" unless running in GKE, otherwies auto-sets to gcp
-          # - name: ENV_PLATFORM
-          #   value: "aws"
-          - name: ENABLE_PROFILER
-            value: "0"
-          - name: ENABLE_TRACING
-            value: "1"
-          - name: COLLECTOR_SERVICE_ADDR
-            value: "jaeger:4317"
-          - name: OTEL_SERVICE_NAME
-            value: "frontend"
+            - name: PORT
+              value: "8080"
+            - name: PRODUCT_CATALOG_SERVICE_ADDR
+              value: "productcatalogservice:3550"
+            - name: CURRENCY_SERVICE_ADDR
+              value: "currencyservice:7000"
+            - name: CART_SERVICE_ADDR
+              value: "cartservice:7070"
+            - name: RECOMMENDATION_SERVICE_ADDR
+              value: "recommendationservice:8080"
+            - name: SHIPPING_SERVICE_ADDR
+              value: "shippingservice:50051"
+            - name: CHECKOUT_SERVICE_ADDR
+              value: "checkoutservice:5050"
+            - name: AD_SERVICE_ADDR
+              value: "adservice:9555"
+            - name: SHOPPING_ASSISTANT_SERVICE_ADDR
+              value: "shoppingassistantservice:80"
+            # # ENV_PLATFORM: One of: local, gcp, aws, azure, onprem, alibaba
+            # # When not set, defaults to "local" unless running in GKE, otherwies auto-sets to gcp
+            # - name: ENV_PLATFORM
+            #   value: "aws"
+            - name: ENABLE_PROFILER
+              value: "0"
+            - name: ENABLE_TRACING
+              value: "1"
+            - name: COLLECTOR_SERVICE_ADDR
+              value: "jaeger:4317"
+            - name: OTEL_SERVICE_NAME
+              value: "frontend"
           # - name: CYMBAL_BRANDING
           #   value: "true"
           # - name: ENABLE_ASSISTANT
@@ -164,7 +164,6 @@ spec:
       allowedRoutes:
         namespaces:
           from: Same
-
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute

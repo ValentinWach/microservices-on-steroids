@@ -40,10 +40,10 @@ spec:
           allowPrivilegeEscalation: false
           capabilities:
             drop:
-              - ALL
+            - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: registry.vwach.de/currencyservice:861da7de5df20386bdf54ad86edcd349caa41409 # {"$imagepolicy": "flux-system:currencyservice"}
+        image: registry.vwach.de/currencyservice:20261013-025819-ada6582 # {"$imagepolicy": "flux-system:currencyservice"}
         ports:
         - name: grpc
           containerPort: 7000

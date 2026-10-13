@@ -42,9 +42,9 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: registry.vwach.de/checkoutservice:861da7de5df20386bdf54ad86edcd349caa41409 # {"$imagepolicy": "flux-system:checkoutservice"}
+          image: registry.vwach.de/checkoutservice:20261013-025819-ada6582 # {"$imagepolicy": "flux-system:checkoutservice"}
           ports:
-          - containerPort: 5050
+            - containerPort: 5050
           readinessProbe:
             grpc:
               port: 5050
@@ -52,26 +52,26 @@ spec:
             grpc:
               port: 5050
           env:
-          - name: PORT
-            value: "5050"
-          - name: PRODUCT_CATALOG_SERVICE_ADDR
-            value: "productcatalogservice:3550"
-          - name: SHIPPING_SERVICE_ADDR
-            value: "shippingservice:50051"
-          - name: PAYMENT_SERVICE_ADDR
-            value: "paymentservice:50051"
-          - name: EMAIL_SERVICE_ADDR
-            value: "emailservice:5000"
-          - name: CURRENCY_SERVICE_ADDR
-            value: "currencyservice:7000"
-          - name: CART_SERVICE_ADDR
-            value: "cartservice:7070"
-          - name: ENABLE_TRACING
-            value: "1"
-          - name: COLLECTOR_SERVICE_ADDR
-            value: "jaeger:4317"
-          - name: OTEL_SERVICE_NAME
-            value: "checkoutservice"
+            - name: PORT
+              value: "5050"
+            - name: PRODUCT_CATALOG_SERVICE_ADDR
+              value: "productcatalogservice:3550"
+            - name: SHIPPING_SERVICE_ADDR
+              value: "shippingservice:50051"
+            - name: PAYMENT_SERVICE_ADDR
+              value: "paymentservice:50051"
+            - name: EMAIL_SERVICE_ADDR
+              value: "emailservice:5000"
+            - name: CURRENCY_SERVICE_ADDR
+              value: "currencyservice:7000"
+            - name: CART_SERVICE_ADDR
+              value: "cartservice:7070"
+            - name: ENABLE_TRACING
+              value: "1"
+            - name: COLLECTOR_SERVICE_ADDR
+              value: "jaeger:4317"
+            - name: OTEL_SERVICE_NAME
+              value: "checkoutservice"
           resources:
             requests:
               cpu: 250m
