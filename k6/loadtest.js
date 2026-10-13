@@ -41,8 +41,6 @@ const PRODUCTS = [
 
 const CURRENCIES = ['EUR', 'USD', 'JPY', 'CAD', 'GBP', 'TRY'];
 
-// Roughly one average iteration (~17s think time), so the first wave
-// arrives at about the same rate as the steady state.
 const START_SPREAD_SECONDS = 20;
 
 function randomItem(arr) {
